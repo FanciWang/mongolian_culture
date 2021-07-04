@@ -123,7 +123,6 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     }).catchError((e) => {
-
     });
     return message;
   }

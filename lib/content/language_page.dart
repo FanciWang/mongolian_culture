@@ -26,95 +26,6 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
-//  String url;
-//  loadAsset() async {
-//      await globals
-//          .getImg('contents/language/overall.jpg')
-//          .then((data) {
-//        setState(() {
-//          url=data;
-//        });
-//      });
-//  }
-//  @override
-//  initState() {
-//    super.initState();
-//    Future.delayed(
-//        Duration.zero,
-//            () => setState(() {
-//          loadAsset();
-//        }));
-//  }
-//  @override
-//  Widget build(BuildContext context) {
-//    // TODO: implement build
-//
-//    if (url == null) {
-//      return MaterialApp(
-//        home: Scaffold(
-//          appBar: AppBar(
-//            backgroundColor: AppTheme.mainColor,
-//            title: Center(
-//              child: Text("文字"),
-//            ),
-//            leading: new IconButton(
-//              icon: const Icon(Icons.arrow_back),
-//              onPressed: () {
-//                Navigator.of(context).pop();
-//              },),
-//          ),
-//          body: Center(
-//            child: CircularProgressIndicator(
-//              backgroundColor: AppTheme.subColor,
-//              valueColor: new AlwaysStoppedAnimation<Color>(AppTheme.mainColor),
-//            ),
-//          ),
-//        ),
-//      );
-//    } else {
-//      return MaterialApp(
-//          home: Scaffold(
-//            appBar: AppBar(
-//              backgroundColor: AppTheme.mainColor,
-//              title: Center(
-//                child: Text("文字"),
-//              ),
-//              leading: new IconButton(
-//                icon: const Icon(Icons.arrow_back),
-//                onPressed: () {
-//                  Navigator.of(context).pop();
-//                },),
-//            ),
-//            body: GestureDetector(
-//              onTap: ()async{
-//                String res = await Tflite.loadModel(
-//                  model: "assets/mobilenet_v1_1.0_224.tflite",
-//                  labels: "assets/mobilenet_v1_1.0_224.txt",
-//                );
-//                var recognitions = await Tflite.runModelOnImage(
-//                  path: 'images/logo.png',   // required
-//                  inputSize: 224,   // wanted input size, defaults to 224
-//                  numChannels: 3,   // wanted input channels, defaults to 3
-//                  imageMean: 127.5, // defaults to 117.0
-//                  imageStd: 127.5,  // defaults to 1.0
-//                  numResults: 6,    // defaults to 5
-//                  threshold: 0.05,  // defaults to 0.1
-//                  numThreads: 1,    // defaults to 1
-//                );
-//                print(res);
-//                print(recognitions);
-//                await Tflite.close();
-//              },
-//    child:Padding(
-//
-//              padding: EdgeInsets.all(30.0),
-//              child: Image.network(url),
-//            ),
-//            ),
-//          )
-//      );
-//    }
-//  }
   File _image;
   List _recognitions;
   String _model = yolo;
@@ -302,15 +213,6 @@ class _LanguagePageState extends State<LanguagePage> {
       imageStd: 255.0,
       numResultsPerClass: 1,
     );
-    // var imageBytes = (await rootBundle.load(image.path)).buffer;
-    // img.Image oriImage = img.decodeJpg(imageBytes.asUint8List());
-    // img.Image resizedImage = img.copyResize(oriImage, 416, 416);
-    // var recognitions = await Tflite.detectObjectOnBinary(
-    //   binary: imageToByteListFloat32(resizedImage, 416, 0.0, 255.0),
-    //   model: "YOLO",
-    //   threshold: 0.3,
-    //   numResultsPerClass: 1,
-    // );
     int index = 1;
     for (var item in recognitions) {
       item['index'] = index++;
@@ -334,13 +236,6 @@ class _LanguagePageState extends State<LanguagePage> {
       path: image.path,
       numResultsPerClass: 1,
     );
-    // var imageBytes = (await rootBundle.load(image.path)).buffer;
-    // img.Image oriImage = img.decodeJpg(imageBytes.asUint8List());
-    // img.Image resizedImage = img.copyResize(oriImage, 300, 300);
-    // var recognitions = await Tflite.detectObjectOnBinary(
-    //   binary: imageToByteListUint8(resizedImage, 300),
-    //   numResultsPerClass: 1,
-    // );
     int index = 1;
     for (int i = 0; i < recognitions.length; i++) {
       recognitions[i]['index'] = index++;

@@ -74,7 +74,6 @@ flutter:
     - assets/deeplabv3_257_mv_gpu.tflite
     - assets/deeplabv3_257_mv_gpu.txt
     - assets/posenet_mv1_075_float_from_checkpoints.tflite
-    - lib/content/pic.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

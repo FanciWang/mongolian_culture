@@ -18,27 +18,8 @@ CloudBaseCore core = CloudBaseCore.init({
 CloudBaseAuth auth = CloudBaseAuth(core);
 CloudBaseStorage storage = CloudBaseStorage(core);
 CloudBaseDatabase db = CloudBaseDatabase(core);
-//MaterialColor mainColor = Colors.blue;
-//MaterialColor subColor = Colors.red;
 String myId;
 String myName;
-//Future<String> readText(String dir) async {
-//  String text;
-//  try {
-//    Directory tempDir = await getTemporaryDirectory();
-//    String tempPath = tempDir.path;
-//
-//    Directory appDocDir = await getApplicationDocumentsDirectory();
-//    String appDocPath = appDocDir.path;
-//    print(tempPath);
-//    print(appDocPath);
-//    final File file = File('D:\\Android\\myworkspace\\mongolian_culture\\contents\\mongolian_intro\\text.md');
-//    text = await file.readAsString();
-//  } catch (e) {
-//    print(e);
-//  }
-//  return text;
-//}
 Future<String> readText(String dir) async{
   List<String> fileIds = [
     'cloud://flutter-0gfr3y8dcab04247.666c-flutter-0gfr3y8dcab04247-1305329163/'+dir
@@ -61,19 +42,3 @@ Future<String> getImg(String dir) async{
   CloudBaseStorageRes<List<DownloadMetadata>> res = await storage.getFileDownloadURL(fileIds);
   return res.data[0].downloadUrl;
 }
-
-//String readText(String dir){
-//  List<String> fileIds = [
-//    'cloud://flutter-0gfr3y8dcab04247.666c-flutter-0gfr3y8dcab04247-1305329163/'+dir+'text.md'
-//  ];
-//  storage.getFileDownloadURL(fileIds).then(s){
-//    try {
-//      Dio().get(res.data[0].downloadUrl).then((Response response){
-//        return response.data.toString();
-//      });
-//    } catch (e) {
-//      print(e);
-//    }
-//  });
-//  return '';
-//}

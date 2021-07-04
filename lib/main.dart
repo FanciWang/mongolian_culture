@@ -7,7 +7,9 @@ import 'package:mongolian_culture/entry/login_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   CloudBaseAuthState authState = await globals.auth.getAuthState();
-  if (authState.authType == CloudBaseAuthType.ANONYMOUS) {
+  if (authState==null || (authState!=null && (authState.authType == CloudBaseAuthType.ANONYMOUS))) {
+//  print(authState.authType);
+//  if (authState==null) {
     await globals.auth.signInAnonymously().then((success) {
       print(success);
       runApp(MyApp());

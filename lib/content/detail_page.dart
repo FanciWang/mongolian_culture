@@ -21,14 +21,20 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   Text _detailText;
   Image _detailImg;
-  Icon like = Icon(Icons.favorite,size: 30,);
-  Icon dislike = Icon(Icons.favorite_border,size: 30,);
+  Icon like = Icon(
+    Icons.favorite,
+    size: 30,
+  );
+  Icon dislike = Icon(
+    Icons.favorite_border,
+    size: 30,
+  );
   Icon currentIcon;
   Map myMap;
   List<dynamic> collect = <dynamic>[];
 
   loadAsset() async {
-    await globals.readText('contents/'+_path+'/text.md').then((data) {
+    await globals.readText('contents/' + _path + '/text.md').then((data) {
       setState(() {
         _detailText = new Text(
           data,
@@ -36,35 +42,33 @@ class _DetailPageState extends State<DetailPage> {
         );
       });
     });
-    await globals.getImg('contents/'+_path+'/pic.jpg').then((data) {
+    await globals.getImg('contents/' + _path + '/pic.jpg').then((data) {
       setState(() {
         _detailImg = Image.network(data);
       });
     });
     await globals.db.collection('user').doc(globals.myId).get().then((res) {
       setState(() {
-        collect=res.data[0]['collections'];
+        collect = res.data[0]['collections'];
       });
       setState(() {
-        currentIcon=dislike;
+        currentIcon = dislike;
       });
-      for(var item in res.data[0]['collections']) {
-        if(item['path']==myMap['path']&&item['title']==myMap['title']){
+      for (var item in res.data[0]['collections']) {
+        if (item['path'] == myMap['path'] && item['title'] == myMap['title']) {
           setState(() {
-            currentIcon=like;
+            currentIcon = like;
           });
         }
       }
-
-          });
+    });
   }
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    myMap={'path':_path,'title':_title};
+    myMap = {'path': _path, 'title': _title};
     Future.delayed(
         Duration.zero,
         () => setState(() {
@@ -76,7 +80,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    if (_detailText == null || _detailImg == null || currentIcon==null) {
+    if (_detailText == null || _detailImg == null || currentIcon == null) {
       return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
@@ -85,10 +89,11 @@ class _DetailPageState extends State<DetailPage> {
               child: Text(_title),
             ),
             leading: new IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-            Navigator.of(context).pop();
-            },),
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
           body: Center(
             child: CircularProgressIndicator(
@@ -110,7 +115,8 @@ class _DetailPageState extends State<DetailPage> {
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.of(context).pop();
-              },),
+              },
+            ),
           ),
           body: Padding(
               padding: EdgeInsets.all(30.0),
@@ -137,30 +143,32 @@ class _DetailPageState extends State<DetailPage> {
                       alignment: Alignment.topRight,
                       padding: EdgeInsets.only(right: 30),
                       child: GestureDetector(
-                        onTap: (){
-                          if(currentIcon==like){
+                        onTap: () {
+                          if (currentIcon == like) {
                             setState(() {
-                              currentIcon=dislike;
-                          });
+                              currentIcon = dislike;
+                            });
                             print(collect);
-                            collect.removeWhere((item) => item['path']==myMap['path']&&item['title']==myMap['title']);
-                          }
-                          else{
+                            collect.removeWhere((item) =>
+                                item['path'] == myMap['path'] &&
+                                item['title'] == myMap['title']);
+                          } else {
                             setState(() {
-                              currentIcon=like;
+                              currentIcon = like;
                             });
                             collect.add(myMap);
                           }
-                          globals.db.collection('user').doc(globals.myId).update({
-                            'collections': collect
-                          }).then((res) {
-      print('更新完成');
+                          globals.db
+                              .collection('user')
+                              .doc(globals.myId)
+                              .update({'collections': collect}).then((res) {
+                            print('更新完成');
                           });
                         },
-                        child:ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: currentIcon,
-                      ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: currentIcon,
+                        ),
                       ),
                     ),
                   ])),
